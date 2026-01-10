@@ -1,0 +1,8 @@
+{
+  "name": "Codespace with Docker",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "docker-in-docker": "latest"
+  },
+  "forwardPorts": [5050]
+}
