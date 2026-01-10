@@ -1,14 +1,48 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
+// prisma/schema.prisma
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ====================
+// MODELS - Define Listing FIRST
+// ====================
+
+model Listing {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  price       Float
+  location    String
+  bedrooms    Int
+  beds        Int
+  baths       Float
+  maxGuests   Int
+  amenities   String[]
+  photos      String[]
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relationships (User is defined below, but that's okay)
+  hostId      Int
+  host        User     @relation(fields: [hostId], references: [id])
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String?
+  phone     String?
+  avatar    String?
+  password  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relationships
+  listings  Listing[]
 }
