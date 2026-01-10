@@ -21,7 +21,7 @@ services:
 
   # pgAdmin
   pgadmin:
-    image: dpage/pgadmin4:latest
+    image: dpage/pgadmin4:8
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@staynow.com
@@ -38,13 +38,13 @@ services:
   backend:
     build:
       context: ./backend/backend
-      target: development  # Use 'production' for prod
+      #target: development  # Use 'production' for prod
     restart: always
     ports:
       - "3000:3000"
     environment:
       DATABASE_URL: "postgresql://staynow:staynow_password@postgres:5432/staynow_dev?schema=public"
-      NODE_ENV: development
+      #NODE_ENV: development
     volumes:
       - ./backend:/usr/src/app
       - /usr/src/app/node_modules
@@ -57,7 +57,7 @@ services:
   frontend:
     build:
       context: ./frontend/frontend
-      target: development  # Use 'production' for prod
+      #target: development  # Use 'production' for prod
     restart: always
     ports:
       - "5173:5173"
